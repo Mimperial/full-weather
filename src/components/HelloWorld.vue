@@ -168,7 +168,9 @@ $.ajax({
         console.log(result) //console变量在ie低版本下不能用
         let showapi_res_body = result.showapi_res_body
         if(showapi_res_body.showapi_fee_code == 0){
-          
+          _this.arrTime =[]
+          _this.arrTopTemperature =[]
+          _this.arrSmallTemperature =[]
           let f1 = showapi_res_body.f1
           _this.alarmList = showapi_res_body.alarmList
           _this.day_weather = f1.day_weather
