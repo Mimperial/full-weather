@@ -246,7 +246,6 @@ $.ajax({
         var myddy=mydate.getDay();//获取存储当前日期
         var weekday=["日","一","二","三","四","五","六"];
         this.week = weekday[myddy]
-
         var weather = this.$echarts.init(document.getElementById('weather'));
         console.log('折线图时间')
         console.log(this.arrTime)
@@ -274,6 +273,7 @@ $.ajax({
     //     }
     // },
           xAxis: {
+            show: true,
               type: 'category',
               boundaryGap: false,
               data: this.arrTime, //时间、星期this.arrTime
@@ -286,27 +286,35 @@ $.ajax({
             
           },
           yAxis: {
+            show: false,
               scale:true, //纵坐标起始点根据最低值变化
               type: 'value',
               axisLabel: {
                   formatter: '{value} °C'
               },
+              axisLine:{
+                lineStyle:{
+                    color:'#fff',
+                    // width:8,//这里是为了突出显示加上的
+                }
+            }
           },
           grid:{
                 x:50,
                 y:60,
-                right:50
+                right:50,
+                bottom:20
               },
           series: [{
                   name: '最高气温',
                   type: 'line',
                   data: this.arrTopTemperature, //this.arrTopTemperature,  //最高气温数组
+                  
                   markPoint: {
                       data: [{
                               type: 'max',
                               name: '最大值'
                           }
-
                       ]
                   },
                   markLine: {
@@ -314,6 +322,22 @@ $.ajax({
                           type: 'average',
                           name: '平均值'
                       }]
+                  },
+                  itemStyle : { normal: {label : {show: true}}},
+                  color: {
+                      type: 'linear',
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [{
+                          offset: 0, color: 'orange' // 0% 处的颜色
+                      }, 
+                      // {
+                      //     offset: 1, color: '#4c4c4c' // 100% 处的颜色
+                      // }
+                      ],
+                      global: false // 缺省为 false
                   }
               },
               {
@@ -331,14 +355,28 @@ $.ajax({
                               type: 'average',
                               name: '平均值'
                           },
-
                       ]
+                  },
+                  itemStyle : { normal: {label : {show: true}}},
+                  color: {
+                      type: 'linear',
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [{
+                          offset: 0, color: '#fff' // 0% 处的颜色
+                      }, 
+                      // {
+                      //     offset: 1, color: '#4c4c4c' // 100% 处的颜色
+                      // }
+                      ],
+                      global: false // 缺省为 false
                   }
               }
           ]
       };
       weather.setOption(option)
-
       }
     
     }
@@ -374,7 +412,7 @@ a{
 .weather-top {
   display:flex;
   flex-direction:column;
-  background:linear-gradient(to bottom,#99cdef,#0c92d2);
+  background:linear-gradient(to bottom,rgb(172, 187, 212),#4B515D);
   color:#ffffffdb;
   padding:5px
 }
@@ -465,7 +503,7 @@ canvas{
   flex-direction:row;
   width: 100%;
   justify-content: space-around;
-  margin-top:-40px
+  margin-top:0px
 }
 .alarm-info{
   padding: 10px 0
